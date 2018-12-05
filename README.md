@@ -1,24 +1,3 @@
-# README
+Merchant is e-commerce site for a small grocery that wants to sell products directly to customers over the web!
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Merchant is still under development, and everyone who wants to be part of it can join.
