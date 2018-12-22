@@ -1,0 +1,11 @@
+<%= link_to "New Product", new_product_path %></br>
+
+<% @products.each do |product| %>
+  <%= product.title %></br>
+  <%= product.description %></br>
+  <%= print_price(product.price) %></br>
+  <%= print_stock(product.stock) %></br>
+  <%= button_to "Add to Cart", order_items_path(product_id: product.id) %></br>
+  <%= link_to "Show", product_path(product.id) %>
+<% end %>
+

@@ -1,0 +1,7 @@
+
+<%= @product.title %>
+<%= @product.description %>
+<%= %>
+
+<%= link_to "edit", edit_product_path(@product) %>
+<%= link_to "delete", products_path, method: :delete , data: { confirm: 'Are you sure' }%>
