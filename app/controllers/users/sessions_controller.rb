@@ -11,6 +11,7 @@ class Users::SessionsController < Devise::SessionsController
     super do |user|
       if user.persisted?
         session[:user_id] = user.id
+        
   		load_order
   		@order.update_attributes(user: user)
       end
@@ -19,10 +20,10 @@ class Users::SessionsController < Devise::SessionsController
 
   # DELETE /resource/sign_out
    def destroy
-   	 session[:user_id] = nil
-  	 session[:order_id] = nil
+   	 
      super
-     
+     session[:user_id] = nil
+     session[:order_id] = nil
      
    end
 

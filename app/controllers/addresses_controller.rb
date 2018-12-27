@@ -25,7 +25,7 @@ class AddressesController < ApplicationController
   # POST /addresses.json
   def create
     @address = Address.new(address_params)
-
+    #debugger
     respond_to do |format|
       if @address.save
         format.html { redirect_to order_path(session[:order_id]), notice: 'Address was successfully created.' }
@@ -71,4 +71,10 @@ class AddressesController < ApplicationController
     def address_params
       params.require(:address).permit(:line1, :line2, :city, :state, :zip, :user_id)
     end
+
+    #def redirect_after_creating_address
+      #if current_user is present redirect to his last unsubmited order_id
+      #if session[:order_id] is present redirect to order_path(session[:order_id])
+      #if he is creating address from his /profile redirect to his profile
+    #end
 end

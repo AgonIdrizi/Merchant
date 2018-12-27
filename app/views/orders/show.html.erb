@@ -1,3 +1,5 @@
+<%= form_for @order do |f| %>
+
 <h1>Your Order</h1>
 
 <table>
@@ -36,6 +38,17 @@
     
   <% end %>
   <%= link_to "Empty Cart", @order, data: { confirm: 'Are you sure?' }, method: :delete %>
-
+  <tr>
+    <th>Shipping To:</th>
+    <td>
+      <% if user_signed_in? %> 
+      <%= f.select :address_id, current_user.addresses.collect{|a| [a.to_s, a.id]} %>
+      <% end %>
+      <%= link_to "Add new address", new_address_path %>
+    </td>
+  </tr>
   
 </table>
+ <%= f.submit "Submit Order" %>
+
+<% end %>

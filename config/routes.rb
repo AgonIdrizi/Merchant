@@ -7,4 +7,12 @@ Rails.application.routes.draw do
   resources :order_items
   resources :orders
 
+  resources :orders do
+    member do
+      get :confirm
+    end
+  end
+
+  resources :charges
+
 end
