@@ -36,19 +36,19 @@ RSpec.describe Product, type: :model do
   	  it "is not valid with negative values" do
   	  	product = FactoryGirl.build(:product,price: -1)
   	  	product.save
-  	  	expect(product.errors[:price]).to include("must be greater than 0")
+  	  	expect(product.errors[:price]).to include("must be greater than 0.0")
   	  end
 
   	  it "is not valid with 0" do
   	  	product = FactoryGirl.build(:product,price: 0)
   	  	product.save
-  	  	expect(product.errors[:price]).to include("must be greater than 0")
+  	  	expect(product.errors[:price]).to include("must be greater than 0.0")
   	  end
 
   	  it "is not valid with number greater than 9999999" do
   	  	product = FactoryGirl.build(:product,price: 1000000000)
   	  	product.save
-  	  	expect(product.errors[:price]).to include("must be less than 1000000")
+  	  	expect(product.errors[:price]).to include("must be less than 1000000.0")
   	  end
   	end
 

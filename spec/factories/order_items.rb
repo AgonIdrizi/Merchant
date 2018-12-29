@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :order_item do
-    product_id 1
-    order_id 1
+    association :product
+    association :order
     quantity 1
   end
 end

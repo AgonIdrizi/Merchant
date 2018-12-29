@@ -1,10 +1,10 @@
 FactoryGirl.define do
   factory :address do
-    line1 "MyString"
-    line2 "MyString"
-    city "MyString"
-    state "MyString"
-    zip "MyString"
-    user_id nil
+    line1 "Gostivarska 26"
+    line2 "Just here"
+    city "Tetovo"
+    state "VA"
+    zip "23144"
+    association :user
   end
 end

@@ -14,7 +14,8 @@ class AddressesController < ApplicationController
 
   # GET /addresses/new
   def new
-    @address = current_user.addresses.new
+    @address = current_user ? current_user.addresses.new : Address.new
+    @order = Order.find(params[:order_id])
   end
 
   # GET /addresses/1/edit
@@ -24,10 +25,14 @@ class AddressesController < ApplicationController
   # POST /addresses
   # POST /addresses.json
   def create
+    
     @address = Address.new(address_params)
     #debugger
+    
     respond_to do |format|
       if @address.save
+        #for not logged in users,we'll keep track of their address through address_id attribute in orders table
+        Order.find(session[:order_id]).update_attributes(address_id: @address.id) if current_user.nil?
         format.html { redirect_to order_path(session[:order_id]), notice: 'Address was successfully created.' }
         format.json { render action: 'show', status: :created, location: @address }
       else

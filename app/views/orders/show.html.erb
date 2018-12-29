@@ -42,9 +42,17 @@
     <th>Shipping To:</th>
     <td>
       <% if user_signed_in? %> 
-      <%= f.select :address_id, current_user.addresses.collect{|a| [a.to_s, a.id]} %>
+        <%= f.select :address_id, current_user.addresses.collect{|a| [a.to_s, a.id]} %>
+        <% (link_to "Add new address", new_address_path(order_id: @order.id)) %>
+  <!--  for not logged in users, if we see an address attached to his order we dispaly it   -->              
+      <% elsif @order.address_id.present? %>  
+        <%= @order.address.to_s %>
+        <%= link_to 'Edit', '#' %>
+        <%= link_to 'Delete', '#'%>
+        <!-- if we dont see an order attached to not logged in user we add link to add new address -->
+      <% else %>
+      <%= link_to "Add new address", new_address_path(order_id: @order.id) %>
       <% end %>
-      <%= link_to "Add new address", new_address_path %>
     </td>
   </tr>
   

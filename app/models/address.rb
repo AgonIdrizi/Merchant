@@ -1,8 +1,8 @@
 class Address < ApplicationRecord
-  belongs_to :user
+  belongs_to :user ,optional: true
   has_many :orders
 
-  validates :line1, :city, :state, :zip, presence: :true
+  validates :line1, :city, :state, :zip, presence: :true 
   validates :state, format: {with: /[A-Z]{2}/}
   validates :zip, format: {with: /\d{5}/}
 

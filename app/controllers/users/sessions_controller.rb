@@ -12,8 +12,8 @@ class Users::SessionsController < Devise::SessionsController
       if user.persisted?
         session[:user_id] = user.id
         
-  		load_order
-  		@order.update_attributes(user: user)
+  		  load_order_for_registered_users
+  		  @order.update_attributes(user: user)
       end
     end
   end
