@@ -12,7 +12,7 @@ RSpec.describe Order, type: :model do
   	expect(order.user_id).to be nil
   end
 
-  it "can have more or to order-item" do
+  xit "can have more or to order-item" do
   	product = FactoryGirl.create(:product)
   	order = FactoryGirl.create(:order, user_id: nil)
 

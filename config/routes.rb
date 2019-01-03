@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   root to: "products#index"
   resources :order_items
   resources :orders
+  resources :carts
 
   resources :orders do
     member do

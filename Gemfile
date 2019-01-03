@@ -15,7 +15,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'devise'
 gem 'figaro'
 gem 'omniauth-github'
-gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
+gem 'activemerchant'
 
 
 # Reduces boot times through caching; required in config/boot.rb

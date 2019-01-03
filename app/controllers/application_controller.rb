@@ -2,15 +2,16 @@ class ApplicationController < ActionController::Base
 
 
 
- def load_order 
-	@order = Order.find_or_initialize_by(id: session[:order_id], status: "unsubmitted")
-	  if @order.new_record? #if is not persisted in db then enter the block and save it to db
-        @order.save!
-        session[:order_id] = @order.id
+ def load_cart 
+	@cart = Cart.find_or_initialize_by(id: session[:cart_id])
+	  if @cart.new_record? #if is not persisted in db then enter the block and save it to db
+        @cart.save!
+        session[:cart_id] = @cart.id
       end
+
   end
-  # for signed in_users we load the order once he logins
-  def load_order_for_registered_users
+  # for signed in_users we load the cart once he logins
+  def load_cart_for_registered_users
      if session[:order_id].present? && Order.find_by(id: session[:order_id]).order_items.present?
      	#if  Order.where(user_id: current_user.id, status: "unsubmitted").last.order_items.present?
      	@order = current_user.orders.first_or_create(user_id: current_user.id, status: "unsubmitted") 

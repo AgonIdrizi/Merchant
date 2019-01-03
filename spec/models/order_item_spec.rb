@@ -7,7 +7,7 @@ RSpec.describe OrderItem, type: :model do
   end
 
   it "can't create an order-item without order" do
-  	order_item = FactoryGirl.build(:order_item, order_id: nil)
+  	order_item = FactoryGirl.build(:order_item, cart_id: nil)
   	order_item.save
   	expect(order_item.persisted?).to be_falsey
   end

@@ -1,0 +1,41 @@
+
+<h1>Your Cart</h1>
+
+<table>
+  <tr>
+    <th>Customer</th>
+    <td><%= @cart.user_id  %></td>
+  </tr>
+  <tr>
+    <th>Items:</th>
+    <td><%= @cart.order_items.count %></td>
+  </tr>
+  <tr>
+    <th>Order total:</th>
+    <td><%= print_price @cart.total %></td>
+  </tr>
+  <tr>
+    <th>Items</th>
+    <th>Title</th>
+    <th>Quantity</th>
+    <th>Unit Price</th>
+    <th>Subtotal</th>
+  </tr>
+  <% @cart.order_items.each do |item| %>
+    
+    <tr>
+      <td><%= item.product.title %></td>
+      <td><%= link_to item.quantity, edit_order_item_path(item) %></td>
+      <td><%= print_stock item.product.stock, item.quantity %></td>
+      <td><%= print_price item.product.price %></td>
+      <td><%= print_price item.subtotal %></td>
+      <td><%= link_to 'Remove', item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+    
+  <% end %>
+  <%= link_to "Empty Cart", @cart, data: { confirm: 'Are you sure?' }, method: :delete %>
+  
+  
+</table>
+ 
+
