@@ -1,5 +1,6 @@
 class OrdersController < ApplicationController
 	before_action :set_order_id ,only: [:show, :edit, :update, :destroy, :confirm]
+  before_action :access_only_your_order
 	def show
 	 
 	end
@@ -55,5 +56,13 @@ class OrdersController < ApplicationController
 
 	def set_order_id
 	  @order = Order.find_by(id: params[:id])
+    #debugger
 	end
+  #dont allow users to acccess other orders, by checking the id of order in the session[:order_id] and by checking param[:id] of URI to which user is navigating
+  def access_only_your_order
+    #debugger
+    if params[:id].to_i  != session[:order_id]
+      redirect_to root_path
+    end
+  end
 end

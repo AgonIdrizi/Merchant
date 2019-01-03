@@ -27,6 +27,7 @@
     <th>Subtotal</th>
   </tr>
   <% @order.order_items.each do |item| %>
+    
     <tr>
       <td><%= item.product.title %></td>
       <td><%= link_to item.quantity, edit_order_item_path(item) %></td>
@@ -43,7 +44,7 @@
     <td>
       <% if user_signed_in? %> 
         <%= f.select :address_id, current_user.addresses.collect{|a| [a.to_s, a.id]} %>
-        <% (link_to "Add new address", new_address_path(order_id: @order.id)) %>
+        <%= (link_to "Add new address", new_address_path(order_id: @order.id)) %>
   <!--  for not logged in users, if we see an address attached to his order we dispaly it   -->              
       <% elsif @order.address_id.present? %>  
         <%= @order.address.to_s %>
