@@ -16,6 +16,7 @@ gem 'devise'
 gem 'figaro'
 gem 'omniauth-github'
 gem 'activemerchant'
+gem "administrate"
 
 
 # Reduces boot times through caching; required in config/boot.rb

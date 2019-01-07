@@ -1,6 +1,17 @@
 Rails.application.routes.draw do
   
-  devise_for :admins
+  namespace :admin do
+      
+      resources :users
+      resources :addresses
+      resources :carts
+      resources :orders
+      resources :order_items
+      resources :products
+
+      root to: "orders#index"
+    end
+  
   resources :addresses
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth',sessions: 'users/sessions' }
   resources :products
