@@ -68,7 +68,7 @@ class OrdersController < ApplicationController
 	private
 
 	def order_params
-      params.permit(:user_id, :status,:shipping_address_id)
+      params.require(:order).permit( :user_id, :status,:shipping_address_id)
     end
 
 	def set_order_id

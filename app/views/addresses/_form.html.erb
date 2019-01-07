@@ -31,7 +31,7 @@
     <%= f.label :zip %><br>
     <%= f.text_field :zip %>
   </div>
-  
+    <%= f.hidden_field :user_id, value: current_user.present? ? current_user.id : 0 %>
   <div class="actions">
     <%= f.submit %>
   </div>
