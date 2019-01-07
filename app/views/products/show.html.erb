@@ -1,7 +1,11 @@
 
+<h4>Title: </h4>
 <%= @product.title %>
+<h4>Description:  </h4>
 <%= @product.description %>
-<%= %>
 
-<%= link_to "edit", edit_product_path(@product) %>
-<%= link_to "delete", products_path, method: :delete , data: { confirm: 'Are you sure' }%>
+<%= %>
+<% if current_user.try(:admin?) %>
+  <%= link_to "edit", edit_product_path(@product) %>
+  <%= link_to "delete", products_path, method: :delete , data: { confirm: 'Are you sure' }%>
+<% end %>

@@ -1,4 +1,5 @@
 class ProductsController < ApplicationController
+  before_action :check_if_admin , only: [:create, :new, :update, :edit, :destroy]
   def index
     @products = Product.all
   end
@@ -40,5 +41,12 @@ class ProductsController < ApplicationController
 
   def product_params
     params.require(:product).permit(:title, :price, :description, :image, :stock)
+  end
+
+  def check_if_admin
+    if !current_user.try(:admin?)
+      flash[:danger] = "You dont have permission"
+      redirect_to root_path
+    end
   end
 end
