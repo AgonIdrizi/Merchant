@@ -1,17 +1,21 @@
 class CartsController < ApplicationController
   before_action :set_cart_id ,only: [:show, :edit, :update, :destroy, :confirm]
+  #before_action :load_cart, only: [:create, :update] 
+ 
   before_action :access_only_your_cart
 
 
 
 
   def show
+    @session = session[:cart_id]
   end
   def create
-	  @cart = Order.new(cart_params)
+	  @cart = Cart.new(cart_params)
 
       respond_to do |format|
         if @cart.save
+          session[:cart_id] = @cart.id
           format.html { redirect_to @cart, notice: 'Cart was successfully created.' }
           format.json { render action: 'show', status: :created, location: @cart }
         else
@@ -37,7 +41,7 @@ class CartsController < ApplicationController
 
     def destroy
 	  @cart.destroy
-
+    session[:cart_id] = nil
 	  respond_to do |format|
 	  	format.html { redirect_to root_path }
 	  	format.json { head :no_content }
@@ -50,7 +54,7 @@ class CartsController < ApplicationController
     end
 
     def set_cart_id
-	  @cart = Cart.find_by(id: params[:id])
+	  @cart = Cart.find_by(id: session[:cart_id])
     #debugger
 	end
 

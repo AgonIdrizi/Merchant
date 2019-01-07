@@ -1,4 +1,4 @@
-<%= form_for @order do |f| %>
+
 
 <h1>Your Order</h1>
 
@@ -34,20 +34,20 @@
       <td><%= print_stock item.product.stock, item.quantity %></td>
       <td><%= print_price item.product.price %></td>
       <td><%= print_price item.subtotal %></td>
-      <td><%= link_to 'Remove', item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      
     </tr>
     
   <% end %>
-  <%= link_to "Empty Cart", @order, data: { confirm: 'Are you sure?' }, method: :delete %>
+  
   <tr>
     <th>Shipping To:</th>
     <td>
       <% if user_signed_in? %> 
-        <%= f.select :address_id, current_user.addresses.collect{|a| [a.to_s, a.id]} %>
+        <%= select_tag :shipping_address_id,options_for_select( current_user.addresses.collect{|a| [a.to_s, a.id]}) %>
         <%= (link_to "Add new address", new_address_path(order_id: @order.id)) %>
   <!--  for not logged in users, if we see an address attached to his order we dispaly it   -->              
-      <% elsif @order.address_id.present? %>  
-        <%= @order.address.to_s %>
+      <% elsif @order.shipping_address_id.present? %>  
+        <%= @order.shipping_address.to_s %>
         <%= link_to 'Edit', '#' %>
         <%= link_to 'Delete', '#'%>
         <!-- if we dont see an order attached to not logged in user we add link to add new address -->
@@ -58,6 +58,6 @@
   </tr>
   
 </table>
- <%= f.submit "Submit Order" %>
+<%= link_to 'Proceed to payment','#' %>
 
-<% end %>
+

@@ -4,14 +4,14 @@
 <table>
   <tr>
     <th>Customer</th>
-    <td><%= @cart.user_id  %></td>
+    <td><%= '@cart.user_id'  %></td>
   </tr>
   <tr>
     <th>Items:</th>
     <td><%= @cart.order_items.count %></td>
   </tr>
   <tr>
-    <th>Order total:</th>
+    <th>Cart total:</th>
     <td><%= print_price @cart.total %></td>
   </tr>
   <tr>
@@ -37,5 +37,6 @@
   
   
 </table>
+<%= link_to "Continue to Shopping", root_path %> <%= link_to "Start Checkout", '#' %>
  
 

@@ -8,10 +8,12 @@ Rails.application.routes.draw do
   resources :orders
   resources :carts
 
-  resources :orders do
-    member do
-      get :confirm
-    end
+  
+  get :confirm , to: "orders#confirm"
+
+  namespace :checkouts do
+    get 'shipping_address'
+    get 'billing_address'
   end
 
   resources :charges

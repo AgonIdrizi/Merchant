@@ -11,9 +11,10 @@ class Users::SessionsController < Devise::SessionsController
     super do |user|
       if user.persisted?
         session[:user_id] = user.id
-        
-  		  load_order_for_registered_users
-  		  @order.update_attributes(user: user)
+        #on login, transfer items from previous non-logged-in user session
+  		  transfer_order_items_from_previous_session
+  		  #@cart.update_attributes(user: user)
+        #debugger
       end
     end
   end

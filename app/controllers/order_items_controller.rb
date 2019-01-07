@@ -1,5 +1,5 @@
 class OrderItemsController < ApplicationController
-	before_action :load_cart, only: [:create, :update]
+	before_action :load_cart, only: [:create, :update] 
 	
 	before_action :set_order_item, only: [:edit, :destroy, :update]
 
@@ -7,7 +7,15 @@ class OrderItemsController < ApplicationController
 		#quantity ||= +1 if @order.order_items.
 	  #@order_item = @order.order_items.new(quantity: 1, product_id: params[:product_id])
 	  @order_item = @cart.order_items.find_or_initialize_by(product_id: params[:product_id])
-	  @order_item.quantity +=1
+	  
+	  #@order_item.quantity ||= +1 
+
+	  if @order_item.quantity == 0
+	  	@order_item.quantity = 1
+	  else
+	  	@order_item.quantity +=1 
+	  end
+	  #debugger
 	  respond_to do |format|
 	    if @order_item.save
 	  	  format.html { redirect_to @cart, notice: 'Successfully added product to cart.'}
@@ -30,6 +38,7 @@ class OrderItemsController < ApplicationController
         format.html { redirect_to @order_item.cart, notice: 'Item was deleted from your cart.' }
         format.json { head :no_content }
       elsif @order_item.update(order_item_params)
+      	
         format.html { redirect_to @order_item.cart, notice: 'Successfully updated the order item.' }
         format.json { head :no_content }
       else
