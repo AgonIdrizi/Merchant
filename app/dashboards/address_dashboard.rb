@@ -9,7 +9,7 @@ class AddressDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     user: Field::BelongsTo,
-    orders: Field::HasMany,
+    orders: Field::HasMany
     id: Field::Number,
     line1: Field::String,
     line2: Field::String,

@@ -10,8 +10,8 @@ class OrderDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     order_items: Field::HasMany,
     user: Field::BelongsTo,
-    billing_address: Field::BelongsTo.with_options(class_name: "Address"),
-    shipping_address: Field::BelongsTo.with_options(class_name: "Address"),
+    billing_address: Field::BelongsTo.with_options(class_name: "Address",foreign_key: :billing_address_id),
+    shipping_address: Field::BelongsTo.with_options(class_name: "Address",foreign_key: :shipping_address_id),
     id: Field::Number,
     status: Field::String,
     created_at: Field::DateTime,
