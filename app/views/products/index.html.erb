@@ -1,11 +1,15 @@
-<%= link_to "New Product", new_product_path %></br>
-
 <% @products.each do |product| %>
-  <%= product.title %></br>
-  <%= product.description %></br>
-  <%= print_price(product.price) %></br>
-  <%= print_stock(product.stock) %></br>
-  <%= button_to "Add to Cart", order_items_path(product_id: product.id, quantity: 1) %></br>
-  <%= link_to "Show", product_path(product.id) %>
+  <div class="card" style="width: 18rem;">
+  <img class="card-img-top" src="..." alt="Card image cap">
+  <div class="card-body">
+    <h5 class="card-title"><%= product.title %></h5>
+    <p class="card-text"><%= product.description.truncate(23) %></p>
+    <p class="card-text card-price">Price: <%= print_price(product.price) %></p>
+  	<p class="card-text card-stock">Stock: <%= print_stock(product.stock) %></p>
+  </div>
+    <%= button_to "Add to Cart", order_items_path(product_id: product.id, quantity: 1), class: "btn btn-primary" %>
+    <%= link_to "Go to product page", product_path(product.id) %>
+  </div>
+
 <% end %>
 

@@ -12,6 +12,7 @@ class ConfirmsController < ApplicationController
   
   	if @orderform.save
   		#we should find a way to update line_item (order id to the order just created)
+  		#sent email that order is created, with number of order
   		#@cart.destroy
   		session[:cart_id] = nil
   	  redirect_to new_charge_path, notice: 'Order was screated'

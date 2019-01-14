@@ -1,8 +1,7 @@
 Rails.application.routes.draw do
   
-  #get 'confirms/new'
-  #get 'confirms/create'
-  get 'profile' , to: 'users#profile'
+  root to: "products#index"
+  get '/profile' , to: 'users#profile'
   namespace :admin do
       
       resources :users
@@ -19,7 +18,7 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth',sessions: 'users/sessions' }
  
   resources :products
-  root to: "products#index"
+  
   resources :order_items
   resources :orders
   resources :carts
@@ -27,11 +26,7 @@ Rails.application.routes.draw do
   resources :confirms
   post :confirms , to: "confirms#create"
 
-  namespace :checkouts do
-    get 'shipping_address'
-    get 'billing_address'
-  end
 
-  resources :charges
+  resources :charges, only: [:new, :create]
 
 end

@@ -17,7 +17,8 @@ gem 'figaro'
 gem 'omniauth-github'
 gem 'activemerchant'
 gem "administrate"
-
+gem 'bootstrap'
+gem 'jquery-rails'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
