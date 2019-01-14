@@ -1,6 +1,6 @@
 class AddressesController < ApplicationController
    before_action :set_address, only: [:show, :edit, :update, :destroy]
-
+   before_action :save_my_previous_url, only: [:new]
   # GET /addresses
   # GET /addresses.json
   def index
@@ -27,12 +27,12 @@ class AddressesController < ApplicationController
   def create
     
     @address = Address.new(address_params)
-    #debugger
+    
     
     respond_to do |format|
       if @address.save
         
-        format.html { redirect_to confirm_path, notice: 'Address was successfully created.' }
+        format.html { redirect_to session.delete(:my_previous_url), notice: 'Address was successfully created.'}
         format.json { render action: 'show', status: :created, location: @address }
       else
         format.html { render action: 'new' }
@@ -75,6 +75,15 @@ class AddressesController < ApplicationController
     def address_params
       params.require(:address).permit(:line1, :line2, :city, :state, :zip, :user_id)
     end
+
+    def save_my_previous_url
+    # session[:previous_url] is a Rails built-in variable to save last url.
+    session[:my_previous_url] = URI(request.referer || '').path 
+
+  end
+
+
+   
 
     #def redirect_after_creating_address
       #if current_user is present redirect to his last unsubmited order_id

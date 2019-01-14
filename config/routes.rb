@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   
+  #get 'confirms/new'
+  #get 'confirms/create'
   get 'profile' , to: 'users#profile'
   namespace :admin do
       
@@ -22,8 +24,8 @@ Rails.application.routes.draw do
   resources :orders
   resources :carts
 
-  
-  get :confirm , to: "orders#confirm"
+  resources :confirms
+  post :confirms , to: "confirms#create"
 
   namespace :checkouts do
     get 'shipping_address'
