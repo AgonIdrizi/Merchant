@@ -1,14 +1,79 @@
-<%= form_tag(charges_path, method: :post) do  %>
-  <article>
-    <% if flash[:error].present? %>
-      <div id="error_explanation">
-        <p><%= flash[:error] %></p>
-      </div>
-    <% end %>
-    <label class="amount">
-      <span>Amount: $5.00</span>
+
+<%= form_tag(charges_path, method: :post, id: "payment-form") do  %>
+    <span class="payment-errors"></span>
+  
+  <%= hidden_field_tag "order_id", @order_id %>
+  <div class="form-group">
+    <label>
+      <span>Card brand</span>
+      <%= select_tag "brand",options_for_select(["visa","MasterCard"]),type: 'text' %>
     </label>
-  </article>
-<%= submit_tag 'Pay the order' %>
+  </div>
+
+  <div class="form-group">
+    <label>
+      <span>Card Number</span>
+      <input type="text" size="20" name="credit_card_number" data-securionpay="number" />
+    </label>
+  </div>
+
+  <div class="form-group">
+    <label>
+      <span>CVC</span>
+      
+      <input type="text" size="4" name="cvc" data-securionpay="cvc" />
+    </label>
+  </div>
+
+  <div class="form-group">
+    <label>
+      <span>Expiration (MM/YYYY)</span>
+      <input type="text", name="mm" size="2" data-securionpay="expMonth" />
+    </label>
+    <span> / </span>
+    <input type="text" size="4" name="yy" data-securionpay="expYear" />
+  </div>
+
+  <button type="submit">Pay</button>
   
 <% end %>
+
+<script type="text/javascript" src="https://securionpay.com/js/securionpay.js"></script>
+<script type="text/javascript" src="https://securionpay.com/js/securionpay.js"></script>
+
+<script type="text/javascript">
+  // This is required to identify your account
+  Securionpay.setPublicKey('pk_test_gADSExpVSWDlLXDDQyRv6fFN');
+
+  $('#payment-form').submit(function(e) {
+    var form = $('#payment-form');
+    
+    // Disable form submit button to prevent repeatable submits
+    form.find('button').prop('disabled', true);
+    
+    // Send card data to SecurionPay
+    Securionpay.createCardToken(form, createCardTokenCallback);
+    
+    function createCardTokenCallback(token) {
+  var form = $('#payment-form');
+  
+  // Check for errors
+  if (token.error) {
+    // Display error message
+    form.find('.payment-errors').text(token.error.message);
+    // Re-enable form submit button
+    form.find('button').prop('disabled', false);
+  } else {
+    // Append token to the form so that it will be send to server
+    form.append($('<input type="hidden" name="token" />').val(token.id));
+
+    // Submit the form with its default action
+    form.unbind();
+    form.submit();
+  }
+}
+
+    // Prevent the form from submitting default action
+    return false;
+  });
+</script>

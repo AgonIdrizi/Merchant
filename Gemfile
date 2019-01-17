@@ -19,6 +19,7 @@ gem 'activemerchant'
 gem "administrate"
 gem 'bootstrap'
 gem 'jquery-rails'
+gem 'money-rails'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
@@ -38,6 +39,8 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'spring-commands-rspec'
+  gem 'letter_opener'
+  gem 'faker', require: false
 end
 
 group :test do

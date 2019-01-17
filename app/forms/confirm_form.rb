@@ -1,16 +1,19 @@
-class OrderForm
+class ConfirmForm
   include ActiveModel::Model
 
   attr_accessor :user_id, :status, :shipping_address_id,
-  				 :line1, :line2, :city, :state, :zip
+  				 :line1, :line2, :city, :state, :zip,
+  				 :email,
+  				 :cart
 
-  
+  attr_reader :order
+  validates :email, presence: true
   validates :line1, :city, :state, :zip, presence: :true  if :shipping_address_id.nil?
   validates :state, format: {with: /[A-Z]{2}/} if :shipping_address_id.nil?
   validates :zip, format: {with: /\d{5}/} if :shipping_address_id.nil?
+  validate :validate_children
 
-
-  	def initialize(params={})
+  	def initialize(params={}, cart)
   	  @user_id =  !params[:user_id].nil? ?  params[:user_id] : 0
   	  @shipping_address_id =  !params[:shipping_address_id].nil? ? params[:shipping_address_id] : nil
   	  @status = 'Submited'
@@ -19,25 +22,27 @@ class OrderForm
   	  @city = params[:city]
   	  @state = params[:state]
   	  @zip = params[:zip]
+  	  @cart = cart
+  	  @email = params[:email]
   	end
 
 
   def save
+
+  return false if invalid?
   if valid?
     ActiveRecord::Base.transaction do
     	#debugger
       	
         shipping_address.save! if @shipping_address_id.nil?
         order.save!
-      
-  	
-  	  
+      	update_line_items(order) 
     end
     true
   end
-  rescue ActiveRecord::StatementInvalid => e
+  rescue ActiveRecord::RecordInvalid => e
   # Handle database exceptions not covered by validations.
-  #e.message and e.cause.message can help you figure out what happened
+  #e.cause.message #and e.cause.message can help you figure out what happened
   
   end
 
@@ -60,6 +65,24 @@ class OrderForm
     end
   end
 
+  def update_line_items(order)
+  	cart.order_items.each do |item|
+  	  item.order_id = order.id
+  	  item.save!
+  	end
+  end
+
+  def validate_children
+    
+    if shipping_address.invalid?
+      promote_errors(shipping_address.errors)
+    end
+  end
+  def promote_errors(child_errors)
+    child_errors.each do |attribute, message|
+      errors.add(attribute, message)
+    end
+  end
  
 
 

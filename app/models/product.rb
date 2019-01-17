@@ -1,4 +1,6 @@
 class Product < ApplicationRecord
+  monetize :price_in_cents, as: "price"
+
   has_many :order_items, dependent: :destroy
 
   validates :title, presence: true

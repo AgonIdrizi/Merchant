@@ -1,27 +1,41 @@
 class ConfirmsController < ApplicationController
 	before_action :load_cart , only: [ :new]
-	
+	before_action :check_cart_items, only:[:new]
   def new
-  	@orderform = OrderForm.new
+  	@cart = Cart.find_by(id: session[:cart_id])
+  	@confirmform = ConfirmForm.new(@cart)
 
   end
 
   def create
   	@cart = Cart.find_by(id: session[:cart_id])
-  	@orderform = OrderForm.new(params[:order_form])
-  
-  	if @orderform.save
-  		#we should find a way to update line_item (order id to the order just created)
-  		#sent email that order is created, with number of order
-  		#@cart.destroy
+  	@confirmform = ConfirmForm.new(params[:confirm_form], @cart)
+  	
+  	if @confirmform.save
+  		
+  		#sent email that order is created, with number of order, background job with sidekiq
+  		
+  		session[:email] = @confirmform.email
+  		send_create_order_mail(@confirmform.order, session[:email])
+  		@cart.destroy
   		session[:cart_id] = nil
-  	  redirect_to new_charge_path, notice: 'Order was screated'
+  		respond_to do |format|
+  	      format.html {redirect_to new_charge_path(order_id: @confirmform.order.id), notice: 'Order was created' }
+  	  	end
   	else
-  	  flash.now[:danger] = @orderform.errors.full_messages
+  	  flash.now[:danger] = @confirmform.errors.full_messages
   	  render :new
   	end
   end
 
+  private
+  	#carts thaht are empty cant create a order, so we redirect empty carts to root_path
+    def check_cart_items
+      if !@cart.order_items.present?
+      	flash[:danger] = "You need to add items to card to make a new order"
+        redirect_to root_path
+  	  end
+    end
   
 
 end

@@ -1,5 +1,5 @@
 <div class='confirm' >
-<%= form_for @orderform, url: confirms_path do |f|%>
+<%= form_for @confirmform, url: confirms_path do |f|%>
   <div class = cart>
   <h1>Your Cart</h1>
 
@@ -46,7 +46,11 @@
         <%= (link_to "Add new address", new_address_path) %>    
      
       <% else %>
-  	
+  	<div class="field">
+    <%= f.label :email %><br>
+    <%= f.text_field :email %>
+  </div>
+
       <div class="field">
     <%= f.label :line1 %><br>
     <%= f.text_field :line1 %>

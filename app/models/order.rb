@@ -10,4 +10,6 @@ class Order < ApplicationRecord
   def total
   	order_items.map(&:subtotal).sum
   end
+
+  
 end

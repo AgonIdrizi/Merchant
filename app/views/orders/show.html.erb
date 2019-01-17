@@ -42,22 +42,13 @@
   <tr>
     <th>Shipping To:</th>
     <td>
-      <% if user_signed_in? %> 
-        <%= select_tag :shipping_address_id,options_for_select( current_user.addresses.collect{|a| [a.to_s, a.id]}) %>
-        <%= (link_to "Add new address", new_address_path(order_id: @order.id)) %>
-  <!--  for not logged in users, if we see an address attached to his order we dispaly it   -->              
-      <% elsif @order.shipping_address_id.present? %>  
-        <%= @order.shipping_address.to_s %>
-        <%= link_to 'Edit', '#' %>
-        <%= link_to 'Delete', '#'%>
-        <!-- if we dont see an order attached to not logged in user we add link to add new address -->
-      <% else %>
-      <%= link_to "Add new address", new_address_path(order_id: @order.id) %>
-      <% end %>
+      <%= @order.shipping_address %>
     </td>
   </tr>
   
 </table>
+<% if @order.status == 'needs_payment' %>
 <%= link_to 'Proceed to payment','#' %>
+<% end %>
 
 

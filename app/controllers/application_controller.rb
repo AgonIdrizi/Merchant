@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-
+include ApplicationHelper
 
 
  def load_cart 
