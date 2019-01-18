@@ -8,7 +8,7 @@ class CartsController < ApplicationController
 
 
   def show
-    @session = session[:cart_id]
+    
   end
   def create
 	  @cart = Cart.new(cart_params)
