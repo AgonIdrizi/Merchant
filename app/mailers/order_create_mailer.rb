@@ -4,6 +4,6 @@ class OrderCreateMailer < ApplicationMailer
 	def order_create_email(order, email)
 	  @order = order
 	  @email =  email
-	  mail(to: email, subject: "Order #{@order.id} was submitted")
+	  mail(to: email, subject: "Order #{@order[:id]} was created")
 	end
 end

@@ -15,8 +15,8 @@ class ConfirmsController < ApplicationController
   		
   		#sent email that order is created, with number of order, background job with sidekiq
   		
-  		session[:email] = @confirmform.email
-  		send_create_order_mail(@confirmform.order, session[:email])
+  		session[:email] = @confirmform.email #we will need email of non-registered in payment form?
+  		EmailForOrderConfirmationWorker.perform_async(@confirmform.order.id, session[:email])
   		@cart.destroy
   		session[:cart_id] = nil
   		respond_to do |format|

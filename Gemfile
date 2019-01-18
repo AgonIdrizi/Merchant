@@ -20,6 +20,7 @@ gem "administrate"
 gem 'bootstrap'
 gem 'jquery-rails'
 gem 'money-rails'
+gem 'sidekiq'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false

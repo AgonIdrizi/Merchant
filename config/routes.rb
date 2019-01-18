@@ -2,6 +2,10 @@ Rails.application.routes.draw do
   
   root to: "products#index"
   get '/profile' , to: 'users#profile'
+
+  require 'sidekiq/web'
+  mount Sidekiq::Web => '/sidekiq'
+
   namespace :admin do
       
       resources :users

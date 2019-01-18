@@ -16,13 +16,7 @@ class OrdersController < ApplicationController
       #debugger
       respond_to do |format|
         if @order.save
-          @cart.order_items.each do |order_item|
-            order_item.order_id = @order.id
-            order_item.save
-          end
-          session[:cart_id] = nil
-          session[:user_id] = nil
-          @cart.destroy 
+          
           
           format.html { redirect_to @order, notice: 'Order was successfully created.' }
           format.json { render action: 'show', status: :created, location: @order }
