@@ -30,7 +30,11 @@
     
     <tr>
       <td><%= item.product.title %></td>
-      <td><%= link_to item.quantity, edit_order_item_path(item) %></td>
+      <% if @order.status == 'needs_payment' %>
+        <td><%= link_to item.quantity, edit_order_item_path(item) %></td>
+      <% else %>
+        <td><%= item.quantity %></td>
+      <% end %>
       <td><%= print_stock item.product.stock, item.quantity %></td>
       <td><%= print_price item.product.price %></td>
       <td><%= print_price item.subtotal %></td>

@@ -8,6 +8,6 @@ class Address < ApplicationRecord
   validates :zip, format: {with: /\d{5}/}
 
   def to_s
-    [line1, line2, "#{city}, #{state} #{zip}"].compact.join(", ")
+    [line1, line2, "#{city}, #{state}, #{zip}"].compact.join(", ")
   end
 end

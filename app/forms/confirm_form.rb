@@ -2,15 +2,15 @@ class ConfirmForm
   include ActiveModel::Model
 
   attr_accessor :user_id, :status, :shipping_address_id,
-  				 :line1, :line2, :city, :state, :zip,
-  				 :email,
-  				 :cart
-
+  				      :line1, :line2, :city, :state, :zip,
+  				      :email,
+  				      :cart
   attr_reader :order
+  
   validates :email, presence: true
-  validates :line1, :city, :state, :zip, presence: :true  if :shipping_address_id.nil?
-  validates :state, format: {with: /[A-Z]{2}/} if :shipping_address_id.nil?
-  validates :zip, format: {with: /\d{5}/} if :shipping_address_id.nil?
+  validates :line1, :city, :state, :zip, presence: :true  
+  validates :state, format: {with: /[A-Z]{2}/} 
+  validates :zip, format: {with: /\d{5}/}
   validate :validate_children
 
   	def initialize(params={}, cart)
@@ -29,20 +29,16 @@ class ConfirmForm
 
   def save
 
-  return false if invalid?
   if valid?
     ActiveRecord::Base.transaction do
-    	#debugger
-      	
-        shipping_address.save! if @shipping_address_id.nil?
-        order.save!
-      	update_line_items(order) 
+      shipping_address.save! if @shipping_address_id.nil?
+      order.save!
+      update_line_items(order) 
     end
     true
+  else 
+    false
   end
-  rescue ActiveRecord::RecordInvalid => e
-  # Handle database exceptions not covered by validations.
-  #e.cause.message #and e.cause.message can help you figure out what happened
   
   end
 
