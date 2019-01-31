@@ -31,6 +31,7 @@ Rails.application.routes.draw do
   post :confirms , to: "confirms#create"
 
 
-  resources :charges, only: [:new, :create]
-
+  
+  post :charges, to: "charges#create"
+  get 'charges/new', to: "charges#new"
 end

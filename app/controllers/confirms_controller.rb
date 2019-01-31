@@ -19,8 +19,9 @@ class ConfirmsController < ApplicationController
   		EmailForOrderConfirmationWorker.perform_async(@confirmform.order.id, session[:email])
   		@cart.destroy
   		session[:cart_id] = nil
+      session[:order_id] = @confirmform.order.id
   		respond_to do |format|
-  	      format.html {redirect_to new_charge_path(order_id: @confirmform.order.id), notice: 'Order was created' }
+  	      format.html {redirect_to charges_new_path, notice: 'Order was created' }
   	  	end
   	else
   	  flash.now[:danger] = @confirmform.errors.full_messages

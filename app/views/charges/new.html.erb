@@ -1,79 +1,47 @@
+<div class="row">
+  <div class="col-xs-6 col-xs-offset-3">
+    <h1>New Payment</h1>
 
-<%= form_tag(charges_path, method: :post, id: "payment-form") do  %>
-    <span class="payment-errors"></span>
-  
-  <%= hidden_field_tag "order_id", @order_id %>
-  <div class="form-group">
-    <label>
-      <span>Card brand</span>
-      <%= select_tag "brand",options_for_select(["visa","MasterCard"]),type: 'text' %>
-    </label>
+    <% if @charges.errors.any? %>
+      <div class="alert alert-danger">
+        <ul>
+          <% @charges.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <div class="well">
+      <%= form_for @charges , url: charges_path, method: :post do |f| %>
+        <%= f.hidden_field(:order_id,value: @order_id) %>
+        <div class="form-group">
+          <%= f.label :first_name, class: "control-label" %>
+          <%= f.text_field :first_name, class: "form-control" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :last_name, class: "control-label" %>
+          <%= f.text_field :last_name,class: "form-control" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :credit_card_number, class: "control-label" %>
+          <%= f.text_field :credit_card_number, class: "form-control" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :expiration_month, class: "control-label" %>
+          <%= f.select :expiration_month, months, {}, class: "form-control" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :expiration_year, class: "control-label" %>
+          <%= f.select :expiration_year, years, {}, class: "form-control" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :card_security_code, class: "control-label" %>
+          <%= f.text_field :card_security_code, class: "form-control" %>
+        </div>
+        <div class="form-group">
+          <%= f.submit "Charge Credit Card", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
   </div>
-
-  <div class="form-group">
-    <label>
-      <span>Card Number</span>
-      <input type="text" size="20" name="credit_card_number" data-securionpay="number" />
-    </label>
-  </div>
-
-  <div class="form-group">
-    <label>
-      <span>CVC</span>
-      
-      <input type="text" size="4" name="cvc" data-securionpay="cvc" />
-    </label>
-  </div>
-
-  <div class="form-group">
-    <label>
-      <span>Expiration (MM/YYYY)</span>
-      <input type="text", name="mm" size="2" data-securionpay="expMonth" />
-    </label>
-    <span> / </span>
-    <input type="text" size="4" name="yy" data-securionpay="expYear" />
-  </div>
-
-  <button type="submit">Pay</button>
-  
-<% end %>
-
-<script type="text/javascript" src="https://securionpay.com/js/securionpay.js"></script>
-<script type="text/javascript" src="https://securionpay.com/js/securionpay.js"></script>
-
-<script type="text/javascript">
-  // This is required to identify your account
-  Securionpay.setPublicKey('pk_test_gADSExpVSWDlLXDDQyRv6fFN');
-
-  $('#payment-form').submit(function(e) {
-    var form = $('#payment-form');
-    
-    // Disable form submit button to prevent repeatable submits
-    form.find('button').prop('disabled', true);
-    
-    // Send card data to SecurionPay
-    Securionpay.createCardToken(form, createCardTokenCallback);
-    
-    function createCardTokenCallback(token) {
-  var form = $('#payment-form');
-  
-  // Check for errors
-  if (token.error) {
-    // Display error message
-    form.find('.payment-errors').text(token.error.message);
-    // Re-enable form submit button
-    form.find('button').prop('disabled', false);
-  } else {
-    // Append token to the form so that it will be send to server
-    form.append($('<input type="hidden" name="token" />').val(token.id));
-
-    // Submit the form with its default action
-    form.unbind();
-    form.submit();
-  }
-}
-
-    // Prevent the form from submitting default action
-    return false;
-  });
-</script>
+</div>
