@@ -83,11 +83,5 @@ class AddressesController < ApplicationController
   end
 
 
-   
-
-    #def redirect_after_creating_address
-      #if current_user is present redirect to his last unsubmited order_id
-      #if session[:order_id] is present redirect to order_path(session[:order_id])
-      #if he is creating address from his /profile redirect to his profile
-    #end
+  
 end

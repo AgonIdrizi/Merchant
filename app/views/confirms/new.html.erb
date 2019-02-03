@@ -83,27 +83,5 @@
 <% end %>
 </div>
 
-<script>
-  function fill(){
-  getAddressFromSelectBox = document.getElementById('confirm_form_shipping_address_id').firstChild.innerHTML.split(",");
- 
-  let line1 = document.getElementById("confirm_form_line1");
-  let line2 = document.getElementById("confirm_form_line2");
-  let city = document.getElementById("confirm_form_city");
-  let state = document.getElementById("confirm_form_state");
-  let zip = document.getElementById("confirm_form_zip");
-
-  
-    line1.value = getAddressFromSelectBox[0];
-     line2.value = getAddressFromSelectBox[1];
-    city.value = getAddressFromSelectBox[2];
-    state.value = getAddressFromSelectBox[3];
-    zip.value = getAddressFromSelectBox[4];
-  
-            
-
-}
-fill();
-</script>
 
 
