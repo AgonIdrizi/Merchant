@@ -9,12 +9,24 @@
       <li class="nav-item active">
         <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
       </li>
-     
+      <li>
+        <form class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </li>
+    </ul >
+    <ul class="navbar-nav cart-nav mr-auto">
+      <li class="nav-item dropdown">
+
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <%= fa_icon "shopping-cart",size: '4px', text: "Cart" %>
+        </a>
+        <%= render partial: 'layouts/cartnav' %>
+      </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
+
+    
     <% if signed_in? %>
       <%= link_to 'Logout', destroy_user_session_path ,class: "nav-link",method: :delete, data: { confirm: 'Are you sure?' } %>
     <% end %>

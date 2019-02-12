@@ -1,0 +1,13 @@
+<div class="dropdown-menu cart cart-data cart-nav" aria-labelledby="navbarDropdown">
+  <% @cart.order_items.each do |item| %>
+    <p>
+    Item: <%= link_to item.product.title , item.product,class: 'dropdown' %>
+    <%= link_to item.quantity, edit_order_item_path(item), class: 'edit-order-item' %>
+    <%= link_to (fa_icon "trash"), item, method: :delete, data: { confirm: 'Are you sure?' }%>
+    </p>
+  <% end %>
+    <a class="dropdown-item" href="#">Action</a>
+    <a class="dropdown-item" href="#">Another action</a>
+    <div class="dropdown-divider"></div>
+    <a class="dropdown-item" href="#">Something else here</a>
+</div>

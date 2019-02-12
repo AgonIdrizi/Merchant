@@ -21,22 +21,14 @@
     <th>Unit Price</th>
     <th>Subtotal</th>
   </tr>
-  <% @cart.order_items.each do |item| %>
-    
-    <tr>
-      <td><%= item.product.title %></td>
-      <td><%= link_to item.quantity, edit_order_item_path(item), class: 'edit-order-item' %></td>
-      <td><%= print_stock item.product.stock, item.quantity %></td>
-      <td><%= item.product.price %></td>
-      <td><%= print_price item.subtotal %></td>
-      <td><%= link_to 'Remove', item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-    </tr>
-    
-  <% end %>
-  <%= link_to "Empty Cart", @cart, data: { confirm: 'Are you sure?' }, method: :delete %>
-  
-  
 </table>
+  <%= render partial: 'carts/cart_items' %>
+    
+
+  <%= link_to "Empty Cart", @cart, data: { confirm: 'Are you sure?' },  method: :delete, remote:true %>
+  
+  
+
 <%= link_to "Continue to Shopping", root_path %> <%= link_to "Start Checkout", '#' %>
 </div>
 

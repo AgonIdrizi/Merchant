@@ -1,5 +1,6 @@
 class ProductsController < ApplicationController
   before_action :check_if_admin , only: [:create, :new, :update, :edit, :destroy]
+  before_action :load_cart
   def index
     @products = Product.all
   end

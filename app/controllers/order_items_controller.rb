@@ -1,5 +1,5 @@
 class OrderItemsController < ApplicationController
-	before_action :load_cart, only: [:create, :update] 
+	before_action :load_cart, only: [:create, :update,:edit, :destroy] 
 	
 	before_action :set_order_item, only: [:edit, :destroy, :update]
 
@@ -52,6 +52,7 @@ class OrderItemsController < ApplicationController
 	  @order_item.destroy
 	  respond_to do |format|
 	  	format.html { redirect_to @order_item.cart }
+	  	format.js
 	  	format.json { head :no_content }
 	  end
 	end
