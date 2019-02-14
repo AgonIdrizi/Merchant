@@ -12,7 +12,7 @@
   </tr>
   <tr>
     <th>Cart total:</th>
-    <td><%= print_price @cart.total %></td>
+    <td class="card-total"><%= print_price @cart.total %></td>
   </tr>
   <tr>
     <th>Items</th>
@@ -21,14 +21,86 @@
     <th>Unit Price</th>
     <th>Subtotal</th>
   </tr>
+  <%= link_to "Empty Cart", @cart, data: { confirm: 'Are you sure?' },  method: :delete, remote:true %>
 </table>
   <%= render partial: 'carts/cart_items' %>
     
 
-  <%= link_to "Empty Cart", @cart, data: { confirm: 'Are you sure?' },  method: :delete, remote:true %>
-  
-  
-
-<%= link_to "Continue to Shopping", root_path %> <%= link_to "Start Checkout", '#' %>
+<%= link_to "Continue to Shopping", root_path %> <%= link_to "Start Checkout", new_confirm_path %>
 </div>
+
+<script>
+  arr = Array.from(document.getElementsByClassName('button'))
+
+  function sendAjax(quantity,order_item_id,path_name)
+  {
+    
+    var formData = new FormData();
+    var token = document.head.getElementsByTagName('meta')[1].content
+    var xmlHttp = new XMLHttpRequest();
+    
+        xmlHttp.onreadystatechange = function()
+        {
+            if(xmlHttp.readyState == 4 && xmlHttp.status == 200)
+            {
+                alert(xmlHttp.responseText);
+            }
+        }
+        xmlHttp.open("PUT", path_name); 
+        xmlHttp.setRequestHeader('Content-Type','application/json');
+        xmlHttp.setRequestHeader('Accept','application/json');
+        xmlHttp.setRequestHeader('X-CSRF-Token',$('meta[name="csrf-token"]').attr('content'));
+        xmlHttp.send(JSON.stringify({quantity: quantity,id: order_item_id})); 
+  }
+
+  function checkForNullValue(quantity){
+    if (quantity == 0){
+      return true
+    } else {
+      return false
+    }
+  };
+
+  function updateSubtotal(element) {
+     let subtotal = element.lastElementChild.previousElementSibling
+     let quantityOfItems = element.firstElementChild.nextElementSibling.text
+     let priceOfItem = element.lastElementChild.previousElementSibling.previousElementSibling.textContent.substr(0)
+     subtotal.textContent = "$"+(parseFloat(parseFloat(quantityOfItems).toFixed(2))*parseFloat(priceOfItem)).toFixed(2);
+  };
+
+  function updateCartTotal() {
+    var cartTotal = document.querySelector('.card-total')
+    var subtotals = Array.from(document.getElementsByClassName('subtotal')).map(element => parseFloat(element.textContent.substr(1))) 
+    cartTotal.textContent ="$" + subtotals.reduce((total,amount)=> total+amount).toFixed(2)
+  };
+
+  function changeValue(e){
+
+     
+    var order_item_id = this.parentElement.firstElementChild.nextElementSibling.pathname.split('/')[2]
+    var order_item_url = this.parentElement.firstElementChild.nextElementSibling.pathname.substr(0,16)
+    e.preventDefault();
+    if (this.className.includes('up')){
+
+      let quantity = parseInt(this.parentElement.firstElementChild.nextElementSibling.text)
+      quantity +=1
+      this.parentElement.firstElementChild.nextElementSibling.text = quantity
+      sendAjax(quantity, order_item_id,order_item_url)
+    }
+    if(this.className.includes('down')){
+      let quantity = parseInt(this.parentElement.firstElementChild.nextElementSibling.text)
+      quantity -=1
+      this.parentElement.firstElementChild.nextElementSibling.text = quantity
+       if (checkForNullValue(quantity)){
+          this.parentElement.parentElement.removeChild(this.parentElement)
+       }
+      sendAjax(quantity, order_item_id,order_item_url)
+    }
+    updateSubtotal(this.parentElement)
+    updateCartTotal()
+  }
+
+  arr.forEach(element => element.addEventListener('click', changeValue))
+
+</script>
 

@@ -1,13 +1,16 @@
 <div class = "cart-data">
   <% @cart.order_items.each do |item| %>
     
-    
+    <p class="item-<%=item.id%>">
       <%= item.product.title %>
+      <%= button_tag (fa_icon "chevron-up"), type: 'button', data: item.id , class: 'button up' %>
       <td><%= link_to item.quantity, edit_order_item_path(item), class: 'edit-order-item' %></td>
+      
+      <%= button_tag (fa_icon "chevron-down"),type: 'button', data: item.id , class: 'button down'%>
       <td><%= print_stock item.product.stock, item.quantity %></td>
-      <td><%= item.product.price %></td>
-      <td><%= print_price item.subtotal %></td>
-      <td><%= link_to 'Remove', item, method: :delete ,remote:true %></td>
-    
+      <span class='price'><%= item.product.price %></span>
+      <span class='subtotal'><%= print_price item.subtotal %></span>
+      <td><%= link_to (fa_icon "trash"), item, method: :delete ,remote:true %></td>
+    </p>
   <% end %>
 </div>

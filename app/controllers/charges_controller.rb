@@ -1,5 +1,5 @@
 class ChargesController < ApplicationController
-  
+  before_action :load_cart, only: [:new]
   def new
     @charges = Charge.new
     @order_id = session[:order_id]

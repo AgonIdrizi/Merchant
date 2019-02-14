@@ -2,7 +2,7 @@ class OrdersController < ApplicationController
 	
   #before_action :check_if_cart_is_empty_or_session_cart_id_is_nil , only: [:create,:confirm]
   before_action :set_order_id ,only: [:show, :edit, :update, :destroy, :confirm]
-  before_action :load_cart , only: [:create]
+  before_action :load_cart 
   #before_action :access_only_your_order
 	def show
 	 
