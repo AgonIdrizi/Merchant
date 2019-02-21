@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+alias_method :devise_current_user, :current_user
 include ApplicationHelper
 
 
@@ -39,7 +40,6 @@ include ApplicationHelper
           end 
         end
         session[:cart_id] = @cart.id
-       # end
     end
   end
 
