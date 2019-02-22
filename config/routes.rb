@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   
   root to: "products#index"
   get '/profile' , to: 'users#profile'
+  patch '/users', to: 'users#update'
 
   require 'sidekiq/web'
   mount Sidekiq::Web => '/sidekiq'
@@ -19,7 +20,7 @@ Rails.application.routes.draw do
     end
   
   resources :addresses
-  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth',sessions: 'users/sessions' }
+  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth',sessions: 'users/sessions', registrations: 'users/registrations' }
  
   resources :products
   

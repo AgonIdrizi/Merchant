@@ -5,7 +5,7 @@ class ConfirmForm
   				      :line1, :line2, :city, :state, :zip,
   				      :email,
   				      :cart
-  attr_reader :order
+               attr_reader :order
   
   validates :email, presence: true
   validates :line1, :city, :state, :zip, presence: :true  
@@ -24,6 +24,7 @@ class ConfirmForm
   	  @zip = params[:zip]
   	  @cart = cart
   	  @email = params[:email]
+      @order = order
   	end
 
 
@@ -32,7 +33,8 @@ class ConfirmForm
   if valid?
     ActiveRecord::Base.transaction do
       shipping_address.save! if @shipping_address_id.nil?
-      order.save!
+      @order.save!
+      raise ActiveRecord::Rollback if order.id == nil
       update_line_items(order) 
     end
     true
@@ -57,7 +59,7 @@ class ConfirmForm
   	if @shipping_address_id.nil?
   	@order ||= Order.new(status: status,user_id: user_id)
     else
-    @order = Order.new(status: status,user_id: user_id, shipping_address_id: shipping_address_id)
+    @order ||= Order.new(status: status,user_id: user_id, shipping_address_id: shipping_address_id)
     end
   end
 

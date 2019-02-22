@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
-alias_method :devise_current_user, :current_user
 include ApplicationHelper
+
 
 
  def load_cart 
@@ -22,7 +22,6 @@ include ApplicationHelper
   def transfer_order_items_from_previous_session
     if session[:cart_id].present? && Cart.find_by(id: session[:cart_id]).order_items.present?
       
-      #debugger
       @cart = Cart.first_or_create(user_id: current_user.id)
       
         #we iterate through order_items of the cart which was in previous session, 
@@ -43,7 +42,11 @@ include ApplicationHelper
     end
   end
 
-  
+  def load_default_cart
+    @cart = Cart.default
+  end
+
+ 
      
   
   

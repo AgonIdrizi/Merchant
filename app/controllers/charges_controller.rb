@@ -1,5 +1,5 @@
 class ChargesController < ApplicationController
-  before_action :load_cart, only: [:new]
+  before_action :load_cart, only: [:new,:create]
   def new
     @charges = Charge.new
     @order_id = session[:order_id]
@@ -7,7 +7,7 @@ class ChargesController < ApplicationController
 
   def create
     
-    order = Order.find_by(id: charge_params[:order_id])
+    order = Order.find_by(id: session[:order_id])
     amount = order.total
     debugger
     @charges = Charge.new(charge_params)

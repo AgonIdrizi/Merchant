@@ -5,4 +5,6 @@ class Cart < ApplicationRecord
   def total
   	order_items.map(&:subtotal).sum
   end
+
+  scope :default, -> {Cart.first}
 end

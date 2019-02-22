@@ -1,4 +1,5 @@
 class Users::SessionsController < Devise::SessionsController
+  before_action :load_default_cart
   # before_action :configure_sign_in_params, only: [:create]
 
   # GET /resource/sign_in
@@ -13,8 +14,7 @@ class Users::SessionsController < Devise::SessionsController
         session[:user_id] = user.id
         #on login, transfer items from previous non-logged-in user session
   		  transfer_order_items_from_previous_session
-  		  #@cart.update_attributes(user: user)
-        #debugger
+  		  
       end
     end
   end

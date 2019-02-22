@@ -14,3 +14,21 @@
     <% end %>
   <% end %>
 <% end %>
+
+<%= form_for @user, url: users_path(@user), method: :patch do |f| %>
+  <div class="field">
+    <%= f.label :first_name %><br />
+    <%= f.text_field :first_name, autofocus: true, autocomplete: "First_name" %>
+  </div>
+  <div class="field">
+    <%= f.label :last_name %><br />
+    <%= f.text_field :last_name, autofocus: true, autocomplete: "Last_name" %>
+  </div>
+  <div class="field">
+    <%= label_tag 'Choose default shipping address' %>
+    <%= f.collection_select(:default_shiping_address, @user.addresses, 'id',:to_s) %></br>
+  </div>
+  <div class="field">
+    <%= f.submit 'Save Your changes', class: 'btn' %>
+  </div>
+<% end %>
