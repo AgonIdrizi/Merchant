@@ -6,15 +6,14 @@ class ChargesController < ApplicationController
   end
 
   def create
-    
     order = Order.find_by(id: session[:order_id])
     amount = order.total
-    debugger
     @charges = Charge.new(charge_params)
     
     if @charges.save
       if @charges.process
         session[:order_id]=nil
+        order.update_attributes(status: 'needs_packing')
         flash[:success] =  "Successfully charged $#{sprintf("%.2f", amount)} to the credit card #{@charges.last4}"
         redirect_to order and return
       end

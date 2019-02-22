@@ -16,7 +16,7 @@ class ConfirmForm
   	def initialize(params={}, cart)
   	  @user_id =  !params[:user_id].nil? ?  params[:user_id] : 0
   	  @shipping_address_id =  !params[:shipping_address_id].nil? ? params[:shipping_address_id] : nil
-  	  @status = 'Submited'
+  	  @status = 'needs_payment'
   	  @line1 = params[:line1]
   	  @line2 = params[:line2]
   	  @city = params[:city]
