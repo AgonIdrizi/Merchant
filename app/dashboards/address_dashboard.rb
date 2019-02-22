@@ -9,7 +9,7 @@ class AddressDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     user: Field::BelongsTo,
-    orders: Field::HasMany
+    orders_shipping_addresses: Field::HasMany.with_options(class_name: "Order",foreign_key: :shipping_address_id),
     id: Field::Number,
     line1: Field::String,
     line2: Field::String,
@@ -27,7 +27,7 @@ class AddressDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
     :user,
-    :orders,
+    :orders_shipping_addresses,
     :id,
     :line1,
   ].freeze
@@ -36,7 +36,7 @@ class AddressDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = [
     :user,
-    :orders,
+    :orders_shipping_addresses,
     :id,
     :line1,
     :line2,
@@ -52,7 +52,7 @@ class AddressDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
     :user,
-    :orders,
+    :orders_shipping_addresses,
     :line1,
     :line2,
     :city,

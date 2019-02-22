@@ -2,7 +2,7 @@ module ProductHelper
   def print_price(price)
     number_to_currency price
   end
-  def print_stock(stock,request=1)
+  def print_stock(stock,requested=1)
     if stock == 0
       content_tag(:span, "Out of Stock", class: "in_stock")
     elsif stock >= requested
